@@ -24,4 +24,4 @@ Constants:
 DeliveryType: STANDARD,EXPRESS
 PackageType: NORMAL,SENSITIVE,CLOAKED
 
-When Package gets ordered, every five seconds you will get the status of the top priority Package 
+When Package gets ordered, every five seconds you will get the status of the top priority Package in console
