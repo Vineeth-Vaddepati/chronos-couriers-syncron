@@ -11,7 +11,7 @@ Placing Order:
 curl -X POST http://localhost:8080/courier ^
  -H "Content-Type: application/json" ^
  -d "{ ^
-   \"packageId\": \"PKG456\", ^
+   \"packageId\": \"PKG123\", ^
    \"deliveryType\": \"EXPRESS\", ^
    \"packageType\": \"NORMAL\", ^
    \"deadLine\": 1722069800000^
@@ -20,4 +20,8 @@ curl -X POST http://localhost:8080/courier ^
 Getting status of the package:
  curl http://localhost:8080/courier/status/PKG123
 
+Constants:
+DeliveryType: STANDARD,EXPRESS
+PackageType: NORMAL,SENSITIVE,CLOAKED
 
+When Package gets ordered, every five seconds you will get the status of the top priority Package 
