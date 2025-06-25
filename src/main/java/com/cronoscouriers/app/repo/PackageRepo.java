@@ -3,24 +3,27 @@ package com.cronoscouriers.app.repo;
 import com.cronoscouriers.app.entity.Package;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class PackageRepo {
-    private final Map<String,Package> pcks;
+    private final Map<String,Package> pcksMap;
+
+    private Queue<Package> pcks;
 
     PackageRepo(){
-        pcks = new HashMap<>();
+        pcksMap = new HashMap<>();
+        pcks = new PriorityQueue<>();
     }
 
     public Package putPackage(Package pck){
-        pcks.put(pck.getPackageId(),pck);
-        return pcks.get(pck.getPackageId());
+        pcksMap.put(pck.getPackageId(),pck);
+        pcks.add(pck);
+        return pcksMap.get(pck.getPackageId());
     }
 
     public Package getPackage(String id){
-        Package pack= pcks.get(id);
+        Package pack= pcksMap.get(id);
         if (pack==null){
             throw new RuntimeException("No Package with given ID");
         }
@@ -30,10 +33,22 @@ public class PackageRepo {
     public Package updatePackage(String id){
 
         boolean bool=false;
-        bool = pcks.containsKey(id);
+        bool = pcksMap.containsKey(id);
         if (bool){
             throw new RuntimeException("No Package with given ID");
         }
-        return pcks.get(id);
+        return pcksMap.get(id);
     }
+
+    public Queue<Package> getPcksQueue(){
+        return pcks;
+    }
+
+    public void addBulkPackages(List<Package> packages){
+        pcks.addAll(packages);
+        for (Package pack:packages){
+            pcksMap.put(pack.getPackageId(), pack);
+        }
+    }
+
 }

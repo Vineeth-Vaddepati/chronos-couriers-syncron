@@ -1,37 +1,68 @@
 package com.cronoscouriers.app.repo;
 
 import com.cronoscouriers.app.entity.Rider;
+import com.cronoscouriers.app.enums.RiderStatus;
+import com.cronoscouriers.app.enums.RiderType;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+@Repository
 public class RiderRepo {
-    private final Map<String, Rider> riders;
+    private final Map<String, Rider> ridersMap;
+    private List<Rider>  riders;
 
     RiderRepo(){
-        riders = new HashMap<>();
+        ridersMap = new HashMap<>();
+        riders = new ArrayList <>();
     }
 
-    public Rider putPackage(Rider rider){
-        riders.put(rider.getRiderId(),rider);
-        return riders.get(rider.getPackageId());
+    public Rider putRider(Rider rider){
+        ridersMap.put(rider.getRiderId(),rider);
+        riders.add(rider);
+        return ridersMap.get(rider.getPackageId());
     }
 
-    public Rider getPackage(String id){
-        Rider rider= riders.get(id);
+    public Rider getRider(String id){
+        Rider rider= ridersMap.get(id);
         if (rider==null){
             throw new RuntimeException("No Rider with given ID");
         }
         return rider;
     }
 
-    public Rider updatePackage(String id){
+    public Rider updateRiderStatus(Rider rider){
 
         boolean bool=false;
-        bool = riders.containsKey(id);
+        bool = ridersMap.containsKey(rider.getRiderId());
         if (bool){
             throw new RuntimeException("No Rider with given ID");
         }
-        return riders.get(id);
+        var rdr=ridersMap.get(rider.getRiderId());
+        rdr.setRiderStatus(rider.getRiderStatus());
+        return rdr;
+    }
+
+    public List<Rider> getAvailableRiders(){
+        return ridersMap.values().stream()
+                .filter(x->x.getRiderStatus().equals(RiderStatus.AVAILABLE))
+                .toList();
+    }
+    public List<Rider> getAvailableExperiencedRiders(){
+        return ridersMap.values().stream()
+                .filter(x->x.getRiderStatus().equals(RiderStatus.AVAILABLE)&&x.getRiderType().equals(RiderType.EXPERIENCED))
+                .toList();
+    }
+
+    public List<Rider> getAvailableCloakedRiders(){
+        return ridersMap.values().stream()
+                .filter(x->x.getRiderStatus().equals(RiderStatus.AVAILABLE)&&x.getRiderType().equals(RiderType.CLOAKED))
+                .toList();
+    }
+
+
+
+    public List<Rider> getALl(){
+        return (List<Rider>) ridersMap.values();
     }
 }
