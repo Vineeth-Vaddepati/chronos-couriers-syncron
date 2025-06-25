@@ -35,7 +35,7 @@ public class PackageRepo {
         boolean bool=false;
 
         bool = pcksMap.containsKey(pack.getPackageId());
-        if (bool){
+        if (!bool){
             throw new RuntimeException("No Rider with given ID");
         }
         var rdr=pcksMap.get(pack.getPackageId());
