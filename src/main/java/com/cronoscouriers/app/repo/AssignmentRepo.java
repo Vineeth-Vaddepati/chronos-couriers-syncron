@@ -25,6 +25,7 @@ public class AssignmentRepo {
                 .orderID(UUID.randomUUID().toString())
                 .packageId(pack.getPackageId())
                 .riderId(pack.getRiderId())
+                .packgeStatus(pack.getPackageStatus())
                 .build();
     }
 

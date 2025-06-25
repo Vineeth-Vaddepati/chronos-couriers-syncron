@@ -35,7 +35,7 @@ public class RiderRepo {
 
         boolean bool=false;
         bool = ridersMap.containsKey(rider.getRiderId());
-        if (bool){
+        if (!bool){
             throw new RuntimeException("No Rider with given ID");
         }
         var rdr=ridersMap.get(rider.getRiderId());

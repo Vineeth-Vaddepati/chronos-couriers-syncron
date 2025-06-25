@@ -14,6 +14,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class CourierService {
@@ -34,7 +35,8 @@ public class CourierService {
         int randomNumber = random.nextInt(100);
         Queue<Package> queue = packageRepo.getPcksQueue();
         if(queue==null||queue.isEmpty()){
-            throw new RuntimeException("No Packages to deliver!!!");
+            System.out.println("No Packages to deliver!!!");
+            return;
         }
         if(randomNumber%2==0){
            Package pack =queue.peek();
@@ -46,6 +48,7 @@ public class CourierService {
             Package pack =queue.peek();
             Package pck=packageRepo.getPackage(pack.getPackageId());
             pck.setPackageStatus(PackageStatus.DELIVERED);
+            pck.setDeliveredTime(Instant.now().toEpochMilli());
             packageRepo.updatePackage(pck);
             String riderId = pck.getRiderId();
             Rider rider = riderRepo.getRider(riderId);
@@ -62,6 +65,8 @@ public class CourierService {
 
 
     public Rider placeOrder(Package pk){
+        System.out.println("Started Order service");
+        pk.setPackageId(UUID.randomUUID().toString());
         pk.setOrderedTime(Instant.now().toEpochMilli());
 
         List<Rider> riders =
@@ -76,7 +81,7 @@ public class CourierService {
         }
         Rider rider = riders.get(0);
         rider.setRiderStatus(RiderStatus.ONDELIVERY);
-
+        System.out.println("Rider Assigned "+rider.getRiderId());
 
         pk.setRiderId(rider.getRiderId());
         pk.setPackageStatus(PackageStatus.ASSIGNED);
