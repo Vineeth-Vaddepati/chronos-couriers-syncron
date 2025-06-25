@@ -34,7 +34,8 @@ public class CourierService {
         int randomNumber = random.nextInt(100);
         Queue<Package> queue = packageRepo.getPcksQueue();
         if(queue==null||queue.isEmpty()){
-            throw new RuntimeException("No Packages to deliver!!!");
+            System.out.println("No Packages to deliver!!!");
+            return;
         }
         if(randomNumber%2==0){
            Package pack =queue.peek();
