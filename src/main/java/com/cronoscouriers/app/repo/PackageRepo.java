@@ -30,14 +30,18 @@ public class PackageRepo {
         return pack;
     }
 
-    public Package updatePackage(String id){
+    public Package updatePackage(Package pack){
 
         boolean bool=false;
-        bool = pcksMap.containsKey(id);
+
+        bool = pcksMap.containsKey(pack.getPackageId());
         if (bool){
-            throw new RuntimeException("No Package with given ID");
+            throw new RuntimeException("No Rider with given ID");
         }
-        return pcksMap.get(id);
+        var rdr=pcksMap.get(pack.getPackageId());
+        rdr.setPackageStatus(pack.getPackageStatus());
+
+        return pcksMap.get(pack.getPackageId());
     }
 
     public Queue<Package> getPcksQueue(){
@@ -49,6 +53,16 @@ public class PackageRepo {
         for (Package pack:packages){
             pcksMap.put(pack.getPackageId(), pack);
         }
+    }
+
+    public Package removePackage(Package pck){
+        Package pack=pcks.poll();
+        if (pack==null){
+            throw new RuntimeException("No Package with given ID");
+        }
+        Package pk=pcksMap.get(pack.getPackageId());
+        pcksMap.remove(pk.getPackageId());
+        return pk;
     }
 
 }

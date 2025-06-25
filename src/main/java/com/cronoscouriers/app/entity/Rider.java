@@ -10,9 +10,8 @@ import lombok.Data;
 public class Rider {
     private String riderId;
     private RiderType riderType;
-    private Location location;
     private RiderStatus riderStatus;
-    private int packageId;
+    private String packageId;
     private long assignedTime;
 
 

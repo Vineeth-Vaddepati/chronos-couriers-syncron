@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class Package implements Comparable<Package>{
     private String packageId;
+
     private DeliveryType deliveryType;
     private PackageType packageType;
     private long orderedTime;
