@@ -1,9 +1,12 @@
 package com.cronoscouriers.app.controller;
 
+import com.cronoscouriers.app.entity.Assignment;
 import com.cronoscouriers.app.entity.Package;
 import com.cronoscouriers.app.entity.Rider;
 import com.cronoscouriers.app.service.CourierService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("courier")
@@ -25,6 +28,11 @@ public class CourierController {
     public String getStatusOfPackage(@PathVariable("id") String id){
        return courierService.getStatusOfPackage(id);
     }
+    @GetMapping("assignments")
+    public List<Assignment> getAssignments(){
+        return courierService.getAssignments();
+    }
+
 
 
 }
