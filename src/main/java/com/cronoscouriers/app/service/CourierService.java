@@ -86,6 +86,7 @@ public class CourierService {
         }
         Rider rider = riders.get(0);
         rider.setRiderStatus(RiderStatus.ONDELIVERY);
+        rider.setPackageId(pk.getPackageId());
         System.out.println("Rider Assigned "+rider.getRiderId());
 
         pk.setRiderId(rider.getRiderId());
