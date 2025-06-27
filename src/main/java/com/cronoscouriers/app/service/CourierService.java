@@ -42,7 +42,6 @@ public class CourierService {
         if(randomNumber%2==0){
            Package pack =queue.peek();
            Package pck=packageRepo.getPackage(pack.getPackageId());
-           assignmentRepo.addToOrder(pck);
            System.out.println("Package: "+pack.getPackageId()+" Status: "+pack.getPackageStatus());
         }
         else{
