@@ -56,7 +56,7 @@ When the application starts, some riders are loaded and to simulate delivering o
 When the user plcaes an Order, an ID is assigned to it and order time is set. Based on the Package type, the riders list is fetched and if no riders is available it will throw Exception.
 The status of the rider and Package is changed and IDs get assigned to them. The package, the rider and the assignment - each stored in theri respective repos.
 
-Map is being used to store as repo/cache for faster retrieval of data. Repos get updated with each transaction. 
+HashMap is being used to store as repo/cache for faster retrieval of data. Repos get updated with each transaction. 
 
 PriorityQueue is used to store and sort the Packages as per teh priority specified. Implemented compareTo in Package class for the logic which is used to sort the data in the Queue.
 The top priority package is dispatched first.
