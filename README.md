@@ -61,4 +61,6 @@ Map is being used to store as repo/cache for faster retrieval of data. Repos get
 PriorityQueue is used to store and sort the Packages as per teh priority specified. Implemented compareTo in Package class for the logic which is used to sort the data in the Queue.
 The top priority package is dispatched first.
 
+When the package is delivered, the rider status is set back to available.
+
 A list of History is maitained which gets updated when an order is placed nad delivered. This list can be fetched through History API.
