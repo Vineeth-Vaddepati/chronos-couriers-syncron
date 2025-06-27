@@ -91,7 +91,9 @@ public class CourierService {
 
         pk.setRiderId(rider.getRiderId());
         pk.setPackageStatus(PackageStatus.ASSIGNED);
+
         packageRepo.putPackage(pk);
+        assignmentRepo.addToOrder(pk);
         return rider;
 
     }

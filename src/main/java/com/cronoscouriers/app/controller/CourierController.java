@@ -28,7 +28,7 @@ public class CourierController {
     public String getStatusOfPackage(@PathVariable("id") String id){
        return courierService.getStatusOfPackage(id);
     }
-    @GetMapping("assignments")
+    @GetMapping("history")
     public List<Assignment> getAssignments(){
         return courierService.getAssignments();
     }
