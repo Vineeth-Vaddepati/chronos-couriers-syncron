@@ -1,5 +1,6 @@
 package com.cronoscouriers.app.service;
 
+import com.cronoscouriers.app.entity.Assignment;
 import com.cronoscouriers.app.entity.Package;
 import com.cronoscouriers.app.entity.Rider;
 import com.cronoscouriers.app.enums.*;
@@ -75,8 +76,6 @@ class CourierServiceTest {
         availableExperiencedRiders.add(rider2);
 
 
-
-
     }
 
     @Test
@@ -95,8 +94,8 @@ class CourierServiceTest {
 
         Rider rider = service.placeOrder(pack);
 
-        Assertions.assertEquals(RiderType.NORMAL,rider.getRiderType());
-        Assertions.assertEquals(RiderStatus.ONDELIVERY,rider.getRiderStatus());
+        Assertions.assertEquals(RiderType.NORMAL, rider.getRiderType());
+        Assertions.assertEquals(RiderStatus.ONDELIVERY, rider.getRiderStatus());
 
     }
 
@@ -115,10 +114,11 @@ class CourierServiceTest {
 
         Rider rider = service.placeOrder(pack);
 
-        Assertions.assertEquals(RiderType.EXPERIENCED,rider.getRiderType());
-        Assertions.assertEquals(RiderStatus.ONDELIVERY,rider.getRiderStatus());
+        Assertions.assertEquals(RiderType.EXPERIENCED, rider.getRiderType());
+        Assertions.assertEquals(RiderStatus.ONDELIVERY, rider.getRiderStatus());
 
     }
+
     @Test
     void placeOrder_success_cloaked_package() {
         pack = new Package();
@@ -134,8 +134,8 @@ class CourierServiceTest {
 
         Rider rider = service.placeOrder(pack);
 
-        Assertions.assertEquals(RiderType.CLOAKED,rider.getRiderType());
-        Assertions.assertEquals(RiderStatus.ONDELIVERY,rider.getRiderStatus());
+        Assertions.assertEquals(RiderType.CLOAKED, rider.getRiderType());
+        Assertions.assertEquals(RiderStatus.ONDELIVERY, rider.getRiderStatus());
     }
 
     @Test
@@ -151,7 +151,7 @@ class CourierServiceTest {
         when(riderRepo.getAvailableCloakedRiders()).thenReturn(Collections.emptyList());
         when(packageRepo.putPackage(Mockito.any())).thenReturn(pack);
 
-       assertThrows(RuntimeException.class,()-> service.placeOrder(pack));
+        assertThrows(RuntimeException.class, () -> service.placeOrder(pack));
     }
 
     @Test
@@ -220,6 +220,31 @@ class CourierServiceTest {
         Exception exception = assertThrows(IllegalStateException.class, () ->
                 service.getStatusOfPackage(pack.getPackageId()));
         assertEquals("Package status is not set for ID: 789", exception.getMessage());
+    }
+
+    @Test
+    void testGetAssignments_returnsAssignmentList() {
+        Assignment assignment1 = Assignment.builder()
+                .orderID("1")
+                .riderId("A")
+                .packageId("X")
+                .packgeStatus(PackageStatus.ASSIGNED)
+                .build();
+        Assignment assignment2 = Assignment.builder()
+                .orderID("2")
+                .riderId("B")
+                .packageId("Y")
+                .packgeStatus(PackageStatus.DELIVERED)
+                .build();
+        List<Assignment> expectedAssignments = List.of(assignment1, assignment2);
+
+        when(assignmentRepo.getAssignments()).thenReturn(expectedAssignments);
+
+        List<Assignment> result = service.getAssignments();
+
+        assertEquals(expectedAssignments, result);
+
+
     }
 
 }
