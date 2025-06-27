@@ -1,5 +1,6 @@
 package com.cronoscouriers.app.service;
 
+import com.cronoscouriers.app.entity.Assignment;
 import com.cronoscouriers.app.entity.Package;
 import com.cronoscouriers.app.entity.Rider;
 import com.cronoscouriers.app.enums.PackageStatus;
@@ -62,9 +63,14 @@ public class CourierService {
 
     }
 
-
-
     public Rider placeOrder(Package pk){
+        if (pk == null) {
+            throw new IllegalArgumentException("Package cannot be nul");
+        }
+        if (pk.getPackageType() == null) {
+            throw new IllegalArgumentException("Pakage type must be specified");
+        }
+
         System.out.println("Started Order service");
         pk.setPackageId(UUID.randomUUID().toString());
         pk.setOrderedTime(Instant.now().toEpochMilli());
@@ -85,13 +91,33 @@ public class CourierService {
 
         pk.setRiderId(rider.getRiderId());
         pk.setPackageStatus(PackageStatus.ASSIGNED);
+
         packageRepo.putPackage(pk);
+        assignmentRepo.addToOrder(pk);
         return rider;
 
     }
 
     public String getStatusOfPackage(String id){
-        return packageRepo.getPackage(id).getPackageStatus().toString();
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Package ID must not be null or empty");
+        }
+
+        Package pkg = packageRepo.getPackage(id);
+        if (pkg == null) {
+            throw new IllegalArgumentException("No package found for ID: " + id);
+        }
+
+        PackageStatus status = pkg.getPackageStatus();
+        if (status == null) {
+            throw new IllegalStateException("Package status is not set for ID: " + id);
+        }
+
+        return status.toString();
+    }
+
+    public List<Assignment> getAssignments(){
+        return assignmentRepo.getAssignments();
     }
 
 

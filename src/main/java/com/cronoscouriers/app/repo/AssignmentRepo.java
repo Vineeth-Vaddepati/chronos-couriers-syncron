@@ -21,12 +21,17 @@ public class AssignmentRepo {
 
     public void addToOrder(Package pack){
 
-        Assignment.builder()
+        Assignment asgnmnt= Assignment.builder()
                 .orderID(UUID.randomUUID().toString())
                 .packageId(pack.getPackageId())
                 .riderId(pack.getRiderId())
                 .packgeStatus(pack.getPackageStatus())
                 .build();
+        assignments.add(asgnmnt);
+    }
+
+    public List<Assignment> getAssignments(){
+        return assignments;
     }
 
 
