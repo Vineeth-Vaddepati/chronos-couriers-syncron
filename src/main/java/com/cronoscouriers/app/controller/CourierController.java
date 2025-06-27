@@ -21,7 +21,7 @@ public class CourierController {
     @PostMapping()
     public String placeOrder(@RequestBody Package pack){
         Rider rider = courierService.placeOrder(pack);
-        return "Package Ordered and assigned to "+rider.getRiderType()+" rider :"+rider.getRiderId();
+        return "Package Ordered and assigned to "+rider.getRiderType()+" rider :"+rider.getRiderId()+" and Package ID:"+rider.getPackageId();
     }
 
     @GetMapping("status/{id}")

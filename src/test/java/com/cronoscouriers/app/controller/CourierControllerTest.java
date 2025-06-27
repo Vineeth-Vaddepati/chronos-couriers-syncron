@@ -53,7 +53,7 @@ class CourierControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pack)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Package Ordered and assigned to NORMAL rider :John"));
+                .andExpect(content().string("Package Ordered and assigned to NORMAL rider :John and Package ID:"+pack.getPackageId()));
     }
 
     @Test

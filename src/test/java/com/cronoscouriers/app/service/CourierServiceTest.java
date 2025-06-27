@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 
@@ -91,6 +93,8 @@ class CourierServiceTest {
         when(riderRepo.getAvailableExperiencedRiders()).thenReturn(availableExperiencedRiders);
         when(riderRepo.getAvailableCloakedRiders()).thenReturn(availableCloakedRiders);
         when(packageRepo.putPackage(Mockito.any())).thenReturn(pack);
+        doNothing().when(assignmentRepo).addToOrder(any());
+
 
         Rider rider = service.placeOrder(pack);
 
@@ -111,6 +115,8 @@ class CourierServiceTest {
         when(riderRepo.getAvailableExperiencedRiders()).thenReturn(availableExperiencedRiders);
         when(riderRepo.getAvailableCloakedRiders()).thenReturn(availableCloakedRiders);
         when(packageRepo.putPackage(Mockito.any())).thenReturn(pack);
+        doNothing().when(assignmentRepo).addToOrder(any());
+
 
         Rider rider = service.placeOrder(pack);
 
@@ -131,6 +137,8 @@ class CourierServiceTest {
         when(riderRepo.getAvailableExperiencedRiders()).thenReturn(availableExperiencedRiders);
         when(riderRepo.getAvailableCloakedRiders()).thenReturn(availableCloakedRiders);
         when(packageRepo.putPackage(Mockito.any())).thenReturn(pack);
+        doNothing().when(assignmentRepo).addToOrder(any());
+
 
         Rider rider = service.placeOrder(pack);
 
@@ -150,6 +158,8 @@ class CourierServiceTest {
         when(riderRepo.getAvailableExperiencedRiders()).thenReturn(Collections.emptyList());
         when(riderRepo.getAvailableCloakedRiders()).thenReturn(Collections.emptyList());
         when(packageRepo.putPackage(Mockito.any())).thenReturn(pack);
+        doNothing().when(assignmentRepo).addToOrder(any());
+
 
         assertThrows(RuntimeException.class, () -> service.placeOrder(pack));
     }
@@ -215,11 +225,11 @@ class CourierServiceTest {
         pack.setPackageId(UUID.randomUUID().toString());
         pack.setDeliveredTime(172206);
 
-        when(packageRepo.getPackage("789")).thenReturn(pack);
+        when(packageRepo.getPackage(anyString())).thenReturn(pack);
 
         Exception exception = assertThrows(IllegalStateException.class, () ->
                 service.getStatusOfPackage(pack.getPackageId()));
-        assertEquals("Package status is not set for ID: 789", exception.getMessage());
+        assertEquals("Package status is not set for ID: "+pack.getPackageId(), exception.getMessage());
     }
 
     @Test
