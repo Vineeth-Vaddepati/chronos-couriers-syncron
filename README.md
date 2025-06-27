@@ -46,8 +46,11 @@ curl --request GET \
 
 ## Application Design:
 Java Version: 17
+
 Spring Boot version: 3.5.3
+
 Server: Tomcat
+
 When the application starts, some riders are loaded and to simulate delivering orders, a method is written and scheduled to execute every 5 seconds, which randomly chooses whether a package is to be delivered or keep it Delivering. If no packages are available it will log thet no Packages are available to deliver.
 
 When the user plcaes an Order, an ID is assigned to it and order time is set. Based on the Package type, the riders list is fetched and if no riders is available it will throw Exception.
