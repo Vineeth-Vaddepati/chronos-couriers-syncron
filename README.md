@@ -22,6 +22,7 @@ Please find the following commands to make Http calls using Curl:
 
 ### Placing Order:
 **Place Order API**
+
 curl --request POST \
   --url http://localhost:8080/courier \
   --header 'content-type: application/json' \
@@ -31,12 +32,14 @@ curl --request POST \
   "deadLine": 1722069800000
 }'
 
-**Status API**
 ### Getting status of the package:
+**Status API**
+
  curl http://localhost:8080/courier/status/PKG123
  
 ### Getting History:
 **History API**
+
 curl --request GET \
   --url http://localhost:8080/courier/history \
   --header 'content-type: application/json'
