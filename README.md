@@ -35,7 +35,7 @@ curl --request POST \
 ### Getting status of the package:
 **Status API**
 
- curl http://localhost:8080/courier/status/PKG123
+ curl http://localhost:8080/courier/status/{package id}
  
 ### Getting History:
 **History API**
